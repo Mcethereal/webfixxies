@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ThreeHero from './components/ThreeHero';
 import AboutSection from './components/AboutSection';
 import PricingSection from './components/PricingSection';
+import MissionSection from './components/MissionSection';
 import ContactSection from './components/ContactSection';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
 
       <div className="relative w-full flex flex-col z-10">
         <ThreeHero />
+        <MissionSection />
         <AboutSection />
         <PricingSection />
         <ContactSection />

@@ -11,11 +11,11 @@ export default function ContactSection() {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         viewport={{ once: true }}
-        className="w-full max-w-4xl mx-auto rounded-3xl backdrop-blur-2xl bg-zinc-900/30 border border-white/10 p-1 md:p-2 shadow-2xl relative group mb-12"
+        className="w-full max-w-4xl mx-auto rounded-3xl backdrop-blur-2xl bg-zinc-900/30 border border-white/10 p-1 md:p-2 shadow-2xl relative group mb-8 sm:mb-12"
       >
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-electricblue/20 to-cyberpink/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl pointer-events-none" />
         
-        <div className="w-full rounded-2xl bg-black border border-white/5 p-12 md:p-20 flex flex-col items-center justify-center text-center relative overflow-hidden z-10">
+        <div className="w-full rounded-2xl bg-black border border-white/5 p-8 md:p-20 flex flex-col items-center justify-center text-center relative overflow-hidden z-10">
           
           <motion.div
             animate={{ 

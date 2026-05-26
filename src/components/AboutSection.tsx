@@ -42,9 +42,9 @@ export default function AboutSection() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        className="w-full max-w-5xl mx-auto flex flex-col items-center mb-24 z-10"
+        className="w-full max-w-5xl mx-auto flex flex-col items-center mb-16 sm:mb-24 z-10"
       >
-        <div className="text-center bg-zinc-950/40 p-8 md:p-12 border border-zinc-800/60 rounded-3xl backdrop-blur-xl shadow-2xl">
+          <div className="text-center bg-zinc-950/40 p-6 md:p-12 border border-zinc-800/60 rounded-3xl backdrop-blur-xl shadow-2xl">
           <h2 className="text-3xl md:text-4xl font-black text-white mb-6 tracking-tight uppercase drop-shadow-md">
             THE MATRIX
           </h2>
@@ -56,7 +56,7 @@ export default function AboutSection() {
       
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 md:gap-16 z-10">
         {team.map((member, index) => (
-          <div key={member.name} className={`w-full md:w-[65%] ${index % 2 === 0 ? 'md:self-end' : 'md:self-start'}`}>
+          <div key={member.name} className={`w-full md:w-[85%] lg:md:w-[65%] ${index % 2 === 0 ? 'md:self-end' : 'md:self-start'}`}>
             <Tilt tiltMaxAngleX={4} tiltMaxAngleY={4} perspective={2000} scale={1.01} transitionSpeed={2500} className="h-full">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}

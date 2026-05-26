@@ -38,13 +38,13 @@ export default function PricingSection() {
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="w-full max-w-5xl mx-auto flex flex-col h-full"
+        className="w-full max-w-5xl mx-auto flex flex-col h-full px-2 sm:px-0"
       >
         <h2 className="text-4xl md:text-5xl font-black text-white mb-24 text-center tracking-tight uppercase drop-shadow-lg">
           THE PRICING CONTINUUM
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative items-stretch h-full max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative items-stretch h-full max-w-5xl mx-auto">
           {tiers.map((tier, idx) => (
             <motion.div
               key={tier.name}
