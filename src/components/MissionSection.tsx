@@ -69,6 +69,27 @@ function MissionOptimizerShell() {
     },
   };
 
+  React.useEffect(() => {
+    try {
+      const p = window.location.pathname.replace(/\/$/, '');
+      const parts = p.split('/');
+      const maybe = parts[parts.length - 1]?.replace(/-/g, ' ');
+      if (maybe && docs[maybe]) setSelectedDoc(maybe);
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  const handleSelect = (k: string) => {
+    setSelectedDoc(k);
+    try {
+      const url = `/optimize/${k.replace(/\s+/g, '-')}`;
+      window.history.replaceState({}, '', url);
+    } catch (e) {
+      // ignore
+    }
+  };
+
   const legacyRows = [
     {
       key: 'sched_rt_runtime_us',
@@ -140,7 +161,7 @@ function MissionOptimizerShell() {
                           {Object.keys(docs).map((k) => (
                             <button
                               key={k}
-                              onClick={() => setSelectedDoc(k)}
+                              onClick={() => handleSelect(k)}
                               className={`block w-full text-left text-blue-700/95 hover:text-blue-900 underline break-words py-0.5 text-[11px] ${selectedDoc === k ? 'font-bold text-blue-900' : ''}`}
                             >
                               {k}
