@@ -127,15 +127,15 @@ function MissionOptimizerShell() {
   };
 
   const handleLegacyApply = () => {
-    // show a vintage vague annoying error
-    setLegacyError('ERROR 0x1F4: operation aborted. Please consult the system log and try again later.');
+    // show a vintage, more accurate legacy error
+    setLegacyError("E_LEGACY_APPLY_FAILED: Operation aborted (0x1F4). See /var/log/legacy-opt.log for details.");
     // auto-dismiss after a short while
     window.setTimeout(() => setLegacyError(null), 4500);
   };
 
   const handlePremiumApply = () => {
     if (!selectedDevice) {
-      setPremiumMsg({ type: 'error', text: 'Select a device from the device selector before applying.' });
+      setPremiumMsg({ type: 'error', text: "E_DEVICE_NOT_SELECTED: No target device selected. Choose a device from the selector." });
       window.setTimeout(() => setPremiumMsg(null), 3800);
       return;
     }
@@ -143,7 +143,7 @@ function MissionOptimizerShell() {
     // simulate successful apply
     setPremiumMsg({ type: 'info', text: `Applying optimization to ${selectedDevice}…` });
     window.setTimeout(() => {
-      setPremiumMsg({ type: 'success', text: `Optimization applied to ${selectedDevice}. ✅` });
+      setPremiumMsg({ type: 'success', text: `Optimization successfully applied to ${selectedDevice}.` });
       window.setTimeout(() => setPremiumMsg(null), 2600);
     }, 900);
   };
@@ -241,6 +241,9 @@ function MissionOptimizerShell() {
                                 </motion.div>
                               )}
                             </AnimatePresence>
+                            <div className="mt-3">
+                              <button onClick={() => setIsTransformed(true)} className="rounded-md border border-white/10 bg-white/5 px-3 py-1 text-[12px] text-white hover:bg-white/7">Preview premium</button>
+                            </div>
                           </motion.div>
                         </AnimatePresence>
                       </div>
@@ -252,10 +255,10 @@ function MissionOptimizerShell() {
                       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                       exit={{ opacity: 0, scale: 0.965, filter: 'blur(6px)' }}
                       transition={{ duration: 0.35, ease: 'easeOut' }}
-                      className="relative h-full w-full select-none overflow-hidden bg-[#050505] p-2.5 pb-12 font-sans text-white sm:p-4 sm:pb-14"
+                      className="relative h-full w-full select-none overflow-y-auto bg-[#050505] p-2.5 pb-12 font-sans text-white sm:p-4 sm:pb-14"
                     >
                       <div className="absolute inset-0 bg-[linear-gradient(to_right,#141414_1px,transparent_1px),linear-gradient(to_bottom,#141414_1px,transparent_1px)] bg-[size:16px_16px] opacity-100" />
-                      <div className="relative z-10 flex h-full min-h-0 flex-col justify-between space-y-4">
+                      <div className="relative z-10 flex h-full min-h-0 flex-col justify-between space-y-4 overflow-y-auto">
                         <div className="flex items-start justify-between gap-2 rounded-lg border border-neutral-800 bg-neutral-900/80 p-2.5 backdrop-blur-sm sm:p-3">
                           <div className="min-w-0">
                             <div className="text-[9px] font-mono uppercase tracking-[0.24em] text-zinc-400 whitespace-nowrap truncate">kernel performance map</div>
