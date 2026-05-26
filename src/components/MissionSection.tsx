@@ -30,6 +30,9 @@ function MissionOptimizerShell() {
   const [isTransformed, setIsTransformed] = useState(false);
   const [cursorTracking, setCursorTracking] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState('kernel params');
+  const [legacyError, setLegacyError] = useState<string | null>(null);
+  const [premiumMsg, setPremiumMsg] = useState<{ type: 'error' | 'success' | 'info'; text: string } | null>(null);
+  const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
 
   const docs: Record<string, { title: string; body: string; table?: Array<{ k: string; v: string }> }> = {
     'kernel params': {
@@ -123,6 +126,28 @@ function MissionOptimizerShell() {
     }, 430);
   };
 
+  const handleLegacyApply = () => {
+    // show a vintage vague annoying error
+    setLegacyError('ERROR 0x1F4: operation aborted. Please consult the system log and try again later.');
+    // auto-dismiss after a short while
+    window.setTimeout(() => setLegacyError(null), 4500);
+  };
+
+  const handlePremiumApply = () => {
+    if (!selectedDevice) {
+      setPremiumMsg({ type: 'error', text: 'Select a device from the device selector before applying.' });
+      window.setTimeout(() => setPremiumMsg(null), 3800);
+      return;
+    }
+
+    // simulate successful apply
+    setPremiumMsg({ type: 'info', text: `Applying optimization to ${selectedDevice}…` });
+    window.setTimeout(() => {
+      setPremiumMsg({ type: 'success', text: `Optimization applied to ${selectedDevice}. ✅` });
+      window.setTimeout(() => setPremiumMsg(null), 2600);
+    }, 900);
+  };
+
   return (
     <div className="mx-auto w-full max-w-[min(100%,56rem)] pt-6 sm:pt-10">
       <div className="mx-auto w-full aspect-[16/10]">
@@ -204,9 +229,18 @@ function MissionOptimizerShell() {
                             </div>
 
                             <div className="mt-3 flex flex-wrap items-center gap-2">
-                              <button className="border border-black bg-[#e5e5e5] px-2 py-1 text-[10px] text-black shadow-none">Apply settings</button>
+                              <button onClick={handleLegacyApply} className="border border-black bg-[#e5e5e5] px-2 py-1 text-[10px] text-black shadow-none">Apply settings</button>
                               <div className="text-[10px] leading-[1.1] text-black/70 break-words">Manual review required before commit.</div>
                             </div>
+
+                            <AnimatePresence>
+                              {legacyError && (
+                                <motion.div key="legacyErr" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }} className="mt-3 rounded border border-orange-400/40 bg-orange-100/20 px-3 py-2 text-[12px] font-mono text-orange-200">
+                                  <div className="font-bold text-orange-100">SYSTEM NOTICE</div>
+                                  <div className="mt-1 text-xs text-orange-100/90">{legacyError}</div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
                           </motion.div>
                         </AnimatePresence>
                       </div>
@@ -264,10 +298,33 @@ function MissionOptimizerShell() {
 
                         <div className="rounded-lg border border-neutral-800 bg-neutral-900/80 p-2.5 backdrop-blur-sm sm:p-3">
                           <div className="text-[9px] font-mono uppercase tracking-[0.24em] text-cyan-300 whitespace-nowrap truncate">optimization flow</div>
-                          <div className="mt-2 grid grid-cols-1 gap-2 p-0.5 sm:grid-cols-3">
+                          <div className="mt-2 grid grid-cols-1 gap-2 p-0.5 sm:grid-cols-3 overflow-auto">
                             <div className="rounded-md border border-neutral-800 bg-black/20 px-2 py-2 text-[10px] text-zinc-400 whitespace-nowrap truncate text-center">diagnose</div>
                             <div className="rounded-md border border-neutral-800 bg-black/20 px-2 py-2 text-[10px] text-zinc-400 whitespace-nowrap truncate text-center">refactor</div>
                             <div className="rounded-md border border-cyan-500/30 bg-cyan-500/10 px-2 py-2 text-[10px] text-cyan-200 whitespace-nowrap truncate text-center">deploy</div>
+                          </div>
+
+                          <div className="mt-3 flex items-center gap-2">
+                            <label className="text-[9px] font-mono text-zinc-400">Device</label>
+                            <select value={selectedDevice ?? ''} onChange={(e) => setSelectedDevice(e.target.value || null)} className="rounded bg-neutral-900/70 border border-neutral-800 px-2 py-1 text-[11px] text-white">
+                              <option value="">Select device...</option>
+                              <option value="edge-01">edge-01</option>
+                              <option value="node-22">node-22</option>
+                              <option value="vm-prod-3">vm-prod-3</option>
+                            </select>
+                            <button onClick={handlePremiumApply} className="ml-auto rounded bg-cyan-600/80 px-3 py-1 text-[11px] text-white">Apply</button>
+                          </div>
+
+                          <div className="mt-3">
+                            <AnimatePresence>
+                              {premiumMsg && (
+                                <motion.div key={premiumMsg.text} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }} className={`rounded px-3 py-2 text-sm ${premiumMsg.type === 'error' ? 'bg-red-700/40 text-red-100' : premiumMsg.type === 'success' ? 'bg-emerald-800/40 text-emerald-100' : 'bg-white/5 text-zinc-50'}`}>
+                                  {premiumMsg.type === 'info' && <div className="font-mono text-xs text-zinc-300">{premiumMsg.text}</div>}
+                                  {premiumMsg.type === 'error' && <div className="font-bold">{premiumMsg.text}</div>}
+                                  {premiumMsg.type === 'success' && <div className="font-bold">{premiumMsg.text}</div>}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
                           </div>
                         </div>
                       </div>
