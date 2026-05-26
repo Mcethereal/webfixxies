@@ -258,10 +258,7 @@ function MissionOptimizerShell() {
                         className="relative h-full w-full select-none bg-[#050505] p-2.5 pb-12 font-sans text-white sm:p-4 sm:pb-14"
                     >
                       <div className="absolute inset-0 bg-[linear-gradient(to_right,#141414_1px,transparent_1px),linear-gradient(to_bottom,#141414_1px,transparent_1px)] bg-[size:16px_16px] opacity-100" />
-                      <div
-                        className="relative z-10 flex h-full min-h-0 flex-col justify-between space-y-4 overflow-y-auto"
-                        style={{ WebkitOverflowScrolling: 'touch' as any, overscrollBehavior: 'contain', scrollbarWidth: 'thin', maxHeight: '100%' }}
-                      >
+                      <div className="relative z-10 flex h-full min-h-0 flex-col justify-between space-y-4 overflow-y-auto modern-scroll">
                         <div className="flex items-start justify-between gap-2 rounded-lg border border-neutral-800 bg-neutral-900/80 p-2.5 backdrop-blur-sm sm:p-3">
                           <div className="min-w-0">
                             <div className="text-[9px] font-mono uppercase tracking-[0.24em] text-zinc-400 whitespace-nowrap truncate">kernel performance map</div>
