@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
 function Model() {
-  const gltf = useLoader(GLTFLoader, '/nexbot_robot_character_concept.glb');
+  const gltf = useLoader(GLTFLoader, './nexbot_robot_character_concept.glb');
   const modelRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {

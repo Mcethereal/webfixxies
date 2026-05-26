@@ -7,9 +7,9 @@ const team = [
     name: 'VEX',
     realName: 'Ibrahim',
     role: 'Design Principal & UI/UX Architect',
-    copy: 'The creative anchor of Web Fixxies. Vex bridges the gap between neural AI execution and premium human-centric design, architecting visual hierarchies that replace legacy web layouts. Specializes in interactive spatial geometry and high-fidelity brand systems.',
-    img: '/vexpfp.png',
-    hoverGlowClass: 'hover:border-rose-500 hover:shadow-[0_0_50px_rgba(244,63,94,0.15)] hover:bg-rose-950/10',
+    copy: 'The architectural core of Web Fixxies. Vex drives the macro UI/UX vision, engineering layouts that forcefully capture enterprise retention. Master of structural typography, component scaling, and high-fidelity wireframing.',
+    img: 'vexpfp.png',
+    hoverGlowClass: 'hover:border-cyberpink hover:shadow-[0_0_50px_rgba(255,0,128,0.15)] hover:bg-zinc-950/50',
     accentColor: 'text-rose-500',
     glowRing: 'shadow-[0_0_20px_rgba(244,63,94,0.4)] border-rose-500/50'
   },
@@ -17,8 +17,8 @@ const team = [
     name: 'RAIN',
     realName: 'Ibrahim',
     role: 'Technical Director & Spatial Engineer',
-    copy: 'The engine room. Rain translates complex interactive physics concepts into production-grade, optimized code. Specializing in React, WebGL/Three.js execution, and optimizing heavy 3D environments to maintain a fluid 60FPS across all device tiers.',
-    img: '/rainpfp.jpg',
+    copy: 'The hardware executor. Rain bridges visionary design with raw browser performance, building out structural React components, framer-motion physics, and three-dimensional spatial environments optimized for high-refresh rates.',
+    img: 'rainpfp.jpg',
     hoverGlowClass: 'hover:border-blue-500 hover:shadow-[0_0_50px_rgba(59,130,246,0.15)] hover:bg-blue-950/10',
     accentColor: 'text-blue-500',
     glowRing: 'shadow-[0_0_20px_rgba(59,130,246,0.4)] border-blue-500/50'
@@ -28,7 +28,7 @@ const team = [
     realName: 'Ahnaf',
     role: 'Growth Strategist & Client Relations',
     copy: 'The strategic conduit. Arsenic aligns advanced engineering capabilities with enterprise business growth. Fluent in international project deployment, cross-border client operations, and ensuring strict adherence to compliance standards.',
-    img: '/alexispfp.webp',
+    img: './alexispfp.webp',
     hoverGlowClass: 'hover:border-indigo-400 hover:shadow-[0_0_50px_rgba(129,140,248,0.15)] hover:bg-indigo-950/10',
     accentColor: 'text-indigo-400',
     glowRing: 'shadow-[0_0_20px_rgba(129,140,248,0.4)] border-indigo-400/50'
