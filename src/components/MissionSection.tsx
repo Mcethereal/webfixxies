@@ -148,37 +148,46 @@ function MissionOptimizerShell() {
                           ))}
                         </aside>
 
-                        <div className="min-w-0 overflow-hidden pr-1">
-                          <div className="space-y-1.5 leading-[1.12] break-words sm:space-y-2">
-                            <p className="font-bold">{docs[selectedDoc].title}</p>
-                            <p>{docs[selectedDoc].body}</p>
-                            <p className="text-xs text-zinc-600">Viewing: {selectedDoc}</p>
-                          </div>
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={selectedDoc}
+                            initial={{ opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -8 }}
+                            transition={{ duration: 0.26, ease: [0.2, 0.8, 0.2, 1] }}
+                            className="min-w-0 overflow-hidden pr-1"
+                          >
+                            <div className="space-y-1.5 leading-[1.12] break-words sm:space-y-2">
+                              <p className="font-bold">{docs[selectedDoc].title}</p>
+                              <p>{docs[selectedDoc].body}</p>
+                              <p className="text-xs text-zinc-600">Viewing: {selectedDoc}</p>
+                            </div>
 
-                          <div className="mt-2 overflow-hidden border border-black text-[9px] leading-[1.05] sm:mt-3">
-                            <table className="w-full border-collapse">
-                              <thead>
-                                <tr className="bg-black/10">
-                                  <th className="border border-black px-2 py-1 text-left font-normal">param</th>
-                                  <th className="border border-black px-2 py-1 text-left font-normal">value</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {((docs[selectedDoc].table as any[]) || []).map((row) => (
-                                  <tr key={row.k}>
-                                    <td className="border border-black px-2 py-1 break-words">{row.k}</td>
-                                    <td className="border border-black px-2 py-1 break-words">{row.v}</td>
+                            <div className="mt-2 overflow-hidden border border-black text-[9px] leading-[1.05] sm:mt-3">
+                              <table className="w-full border-collapse">
+                                <thead>
+                                  <tr className="bg-black/10">
+                                    <th className="border border-black px-2 py-1 text-left font-normal">param</th>
+                                    <th className="border border-black px-2 py-1 text-left font-normal">value</th>
                                   </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
+                                </thead>
+                                <tbody>
+                                  {((docs[selectedDoc].table as any[]) || []).map((row) => (
+                                    <tr key={row.k}>
+                                      <td className="border border-black px-2 py-1 break-words">{row.k}</td>
+                                      <td className="border border-black px-2 py-1 break-words">{row.v}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
 
-                          <div className="mt-3 flex flex-wrap items-center gap-2">
-                            <button className="border border-black bg-[#e5e5e5] px-2 py-1 text-[10px] text-black shadow-none">Apply settings</button>
-                            <div className="text-[10px] leading-[1.1] text-black/70 break-words">Manual review required before commit.</div>
-                          </div>
-                        </div>
+                            <div className="mt-3 flex flex-wrap items-center gap-2">
+                              <button className="border border-black bg-[#e5e5e5] px-2 py-1 text-[10px] text-black shadow-none">Apply settings</button>
+                              <div className="text-[10px] leading-[1.1] text-black/70 break-words">Manual review required before commit.</div>
+                            </div>
+                          </motion.div>
+                        </AnimatePresence>
                       </div>
                     </motion.div>
                   ) : (
