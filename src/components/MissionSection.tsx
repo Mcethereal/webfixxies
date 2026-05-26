@@ -29,6 +29,45 @@ const cards = [
 function MissionOptimizerShell() {
   const [isTransformed, setIsTransformed] = useState(false);
   const [cursorTracking, setCursorTracking] = useState(false);
+  const [selectedDoc, setSelectedDoc] = useState('kernel params');
+
+  const docs: Record<string, { title: string; body: string; table?: Array<{ k: string; v: string }> }> = {
+    'kernel params': {
+      title: 'Kernel Parameters',
+      body: 'A compact reference for kernel tunables and scheduler flags. Use these pages to understand legacy knobs and migration notes.',
+      table: [
+        { k: 'sched_rt_runtime_us', v: '950000' },
+        { k: 'vm.swappiness', v: '10' },
+        { k: 'cpu.max', v: 'max 100000' },
+      ],
+    },
+    'scheduler notes': {
+      title: 'Scheduler Notes',
+      body: 'High-level scheduler heuristics and recommended migration paths to modern task schedulers.',
+      table: [
+        { k: 'rr_weight', v: '32' },
+        { k: 'sched_latency_ns', v: '6000000' },
+      ],
+    },
+    'irq tuning': {
+      title: 'IRQ Tuning',
+      body: 'Interrupt routing and affinity guidance for high-throughput networking and storage workloads.',
+      table: [
+        { k: 'irqbalance', v: 'enabled' },
+        { k: 'affinity_mask', v: '0xff' },
+      ],
+    },
+    'cache flags': {
+      title: 'Cache Flags',
+      body: 'Notes about filesystem and read-ahead flags in legacy systems.',
+      table: [{ k: 'readahead_kb', v: '128' }],
+    },
+    'thread pool': {
+      title: 'Thread Pool',
+      body: 'Guidance on configuring worker pools for predictable latency.',
+      table: [{ k: 'max_workers', v: '64' }],
+    },
+  };
 
   const legacyRows = [
     {
@@ -64,11 +103,11 @@ function MissionOptimizerShell() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[min(100%,44rem)] pt-8 sm:pt-10">
-      <div className="mx-auto w-full aspect-[15/10] sm:aspect-[16/10]">
+    <div className="mx-auto w-full max-w-[min(100%,56rem)] pt-6 sm:pt-10">
+      <div className="mx-auto w-full aspect-[16/10]">
         <div className="flex h-full w-full flex-col items-center">
           <motion.div className="relative h-full w-full overflow-visible">
-            <div className="relative h-[calc(100%-2.6rem)] w-full overflow-hidden rounded-xl border-[3px] border-[#1a1a1a] bg-black shadow-[0_30px_80px_rgba(0,0,0,0.8)] sm:rounded-2xl sm:border-4">
+            <div className="relative h-[calc(100%-2.6rem)] w-full overflow-hidden rounded-2xl border-4 border-[#0f1720] bg-black shadow-[0_40px_120px_rgba(0,0,0,0.9)]">
               <div className="flex h-6 items-center justify-between border-b border-neutral-800 bg-[#0d0d0d] px-3">
                 <div className="flex items-center gap-1.5">
                   <span className="h-2 w-2 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.25)]" />
@@ -76,8 +115,8 @@ function MissionOptimizerShell() {
                   <span className="h-2 w-2 rounded-full bg-emerald-400/80 shadow-[0_0_8px_rgba(74,222,128,0.2)]" />
                 </div>
 
-                <div className="pointer-events-none flex min-w-[10rem] max-w-[60%] items-center justify-center rounded-full border border-neutral-700/80 bg-neutral-900/80 px-3 py-0.5 text-[9px] font-mono tracking-[0.28em] text-zinc-400">
-                  webfixxies.dev/optimize
+                <div className="flex min-w-[12rem] max-w-[60%] items-center justify-center rounded-full border border-neutral-700/80 bg-neutral-900/80 px-3 py-0.5 text-[10px] font-mono tracking-[0.14em] text-zinc-400">
+                  webfixxies.dev/optimize/{selectedDoc.replace(/\s+/g, '-')}
                 </div>
 
                 <div className="w-12" />
@@ -93,44 +132,42 @@ function MissionOptimizerShell() {
                       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                       exit={{ opacity: 0, scale: 0.965, filter: 'blur(6px)' }}
                       transition={{ duration: 0.35, ease: 'easeOut' }}
-                      className="h-full w-full select-none overflow-hidden bg-[#f0f0f0] p-2.5 pb-12 font-serif text-[9px] text-black sm:p-4 sm:pb-14 sm:text-[10px]"
+                      className="h-full w-full select-none overflow-hidden bg-[#f0f0f0] p-3 pb-12 font-serif text-[10px] text-black sm:p-4 sm:pb-14 sm:text-[11px]"
                     >
-                      <div className="grid h-full min-h-0 grid-cols-[64px_minmax(0,1fr)] gap-2 sm:grid-cols-[76px_minmax(0,1fr)] sm:gap-3">
-                        <aside className="space-y-2 border-r border-black/30 pr-2 leading-[1.1]">
-                          <div className="text-[9px] uppercase tracking-[0.25em] text-black/60">docs</div>
-                          <a className="block text-blue-700 underline break-words" href="#">kernel params</a>
-                          <a className="block text-blue-700 underline break-words" href="#">scheduler notes</a>
-                          <a className="block text-blue-700 underline break-words" href="#">irq tuning</a>
-                          <a className="block text-blue-700 underline break-words" href="#">cache flags</a>
-                          <a className="block text-blue-700 underline break-words" href="#">thread pool</a>
+                      <div className="grid h-full min-h-0 grid-cols-[80px_minmax(0,1fr)] gap-3 md:grid-cols-[96px_minmax(0,1fr)]">
+                        <aside className="space-y-2 border-r border-black/30 pr-3 leading-[1.12]">
+                          <div className="text-[10px] uppercase tracking-[0.18em] text-black/60">docs</div>
+                          {Object.keys(docs).map((k) => (
+                            <button
+                              key={k}
+                              onClick={() => setSelectedDoc(k)}
+                              className={`block w-full text-left text-blue-700/95 hover:text-blue-900 underline break-words py-0.5 text-[11px] ${selectedDoc === k ? 'font-bold text-blue-900' : ''}`}
+                            >
+                              {k}
+                            </button>
+                          ))}
                         </aside>
 
                         <div className="min-w-0 overflow-hidden pr-1">
                           <div className="space-y-1.5 leading-[1.12] break-words sm:space-y-2">
-                            <p className="font-bold">Legacy performance tuning reference</p>
-                            <p>
-                              This archive documents obscure system performance parameters, outdated kernel boot flags, and unmaintained optimization notes from a previous generation of infrastructure teams.
-                            </p>
-                            <p>
-                              Important: values may be platform-specific, unsupported, or superseded by modern schedulers. Search carefully, because the relevant answer is usually buried three layers deep.
-                            </p>
+                            <p className="font-bold">{docs[selectedDoc].title}</p>
+                            <p>{docs[selectedDoc].body}</p>
+                            <p className="text-xs text-zinc-600">Viewing: {selectedDoc}</p>
                           </div>
 
-                          <div className="mt-2 overflow-hidden border border-black text-[8px] leading-[1.05] sm:mt-3 sm:text-[9px]">
+                          <div className="mt-2 overflow-hidden border border-black text-[9px] leading-[1.05] sm:mt-3">
                             <table className="w-full border-collapse">
                               <thead>
                                 <tr className="bg-black/10">
-                                  <th className="border border-black px-1 py-1 text-left font-normal">param</th>
-                                  <th className="border border-black px-1 py-1 text-left font-normal">value</th>
-                                  <th className="border border-black px-1 py-1 text-left font-normal">notes</th>
+                                  <th className="border border-black px-2 py-1 text-left font-normal">param</th>
+                                  <th className="border border-black px-2 py-1 text-left font-normal">value</th>
                                 </tr>
                               </thead>
                               <tbody>
-                                {legacyRows.map((row) => (
-                                  <tr key={row.key}>
-                                    <td className="border border-black px-1 py-1 break-words">{row.key}</td>
-                                    <td className="border border-black px-1 py-1 break-words">{row.value}</td>
-                                    <td className="border border-black px-1 py-1 break-words">{row.notes}</td>
+                                {((docs[selectedDoc].table as any[]) || []).map((row) => (
+                                  <tr key={row.k}>
+                                    <td className="border border-black px-2 py-1 break-words">{row.k}</td>
+                                    <td className="border border-black px-2 py-1 break-words">{row.v}</td>
                                   </tr>
                                 ))}
                               </tbody>
@@ -138,12 +175,8 @@ function MissionOptimizerShell() {
                           </div>
 
                           <div className="mt-3 flex flex-wrap items-center gap-2">
-                            <button className="border border-black bg-[#e5e5e5] px-2 py-1 text-[9px] text-black shadow-none">
-                              Apply settings
-                            </button>
-                            <div className="text-[9px] leading-[1.1] text-black/70 break-words">
-                              Manual review required before commit.
-                            </div>
+                            <button className="border border-black bg-[#e5e5e5] px-2 py-1 text-[10px] text-black shadow-none">Apply settings</button>
+                            <div className="text-[10px] leading-[1.1] text-black/70 break-words">Manual review required before commit.</div>
                           </div>
                         </div>
                       </div>
