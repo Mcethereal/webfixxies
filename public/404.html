@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=./#/projects" />
+    <title>Redirecting...</title>
+    <script>
+      var path = window.location.pathname;
+      var repo = '/webfixxies';
+      var route = path.indexOf(repo) === 0 ? path.slice(repo.length) : path;
+      var target = path.indexOf(repo) === 0 ? repo + '/#' + route : '/#' + route;
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>

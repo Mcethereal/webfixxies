@@ -4,9 +4,14 @@ import AboutSection from './components/AboutSection';
 import PricingSection from './components/PricingSection';
 import MissionSection from './components/MissionSection';
 import ContactSection from './components/ContactSection';
+import ProjectsSection from './components/ProjectsSection';
+import ProjectsPage from './components/ProjectsPage';
 
 function App() {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const isProjectsPage =
+    window.location.hash.replace(/^#/, '').replace(/\/$/, '') === '/projects' ||
+    window.location.pathname.replace(/\/$/, '').endsWith('/projects');
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -36,11 +41,18 @@ function App() {
       </div>
 
       <div className="relative w-full flex flex-col z-10">
-        <ThreeHero />
-        <MissionSection />
-        <AboutSection />
-        <PricingSection />
-        <ContactSection />
+        {isProjectsPage ? (
+          <ProjectsPage />
+        ) : (
+          <>
+            <ThreeHero />
+            <MissionSection />
+            <AboutSection />
+            <ProjectsSection />
+            <PricingSection />
+            <ContactSection />
+          </>
+        )}
       </div>
     </div>
   );
